@@ -45,16 +45,20 @@ class Enemy:
         self.intent = intent
         self.moveset = moveset
 
+class Moves:
+    def __init__(self, id, name, type, damage, block, status):
+        self.id = id
+        self.name = name,
+        self.type = type,
+        self.damage = damage,
+        self.block = block,
+        self.status = status
+
 class Event:
     def __init__(self, id, name, choices):
         self.id = id
         self.name = name
         self.choices = choices
-
-# class Shop:
-#     def __init__(self, id, name):
-#         self.id = id
-#         self.name = name
 
 class RestSite:
     def __init__(self):
