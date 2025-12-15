@@ -8,13 +8,17 @@ class Card:
         self.effect = effect
 
 class Character:
-    def __init__(self, name, health, energy, block, status, deck):
+    def __init__(self, name, health, energy, block, status, draw, hand, discard, exhaust, draw_size):
         self.name = name
         self.health = health
         self.energy = energy
         self.block = block
         self.status = status
-        self.deck = deck
+        self.draw = draw
+        self.hand = hand
+        self.discard = discard
+        self.exhaust = exhaust
+        self.draw_size = draw_size
 
     def deal_damage():
         print()
@@ -36,13 +40,12 @@ class EnemyEncounter:
         self.enemy = enemy # List of enemies
 
 class Enemy:
-    def __init__(self, id, name, health, block, status, intent, moveset):
+    def __init__(self, id, name, health, block, status, moveset):
         self.id = id
         self.name = name
         self.health = health
         self.block = block
         self.status = status
-        self.intent = intent
         self.moveset = moveset
 
 class Moves:

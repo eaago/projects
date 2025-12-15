@@ -1,6 +1,8 @@
+import keyboard
 from carddb import *
 from characterdb import *
 from functionlist import *
+from encounterdb import *
 
 clear_screen()
 
@@ -28,8 +30,19 @@ else:
 
 clear_screen()
 
-print("You are now playing as ", player.name, "\nYour starting deck contains ")
-for card in player.deck:
+print("\n\nYou are now playing as the", player.name, "\n\nYour starting deck contains:\n")
+for card in player.draw:
     print(f"{card.name} - {card.card_type} - Costs {card.cost} energy - {card.description}")
 
+print("\n\nPress any key to continue...")
+keyboard.read_key()
+clear_screen()
+
+# ENCOUNTER 1: SLIME
+print("\nAcid Slime Encounter")
+enemy_encounter(player, encounter_list[0])
+
+print("\n\nDraw PILE")
+for card in player.draw:
+    print(f"{card.name} - {card.card_type} - Costs {card.cost} energy - {card.description}")
 
