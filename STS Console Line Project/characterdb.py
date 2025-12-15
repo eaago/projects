@@ -1,5 +1,7 @@
 from classlist import *
-from carddb import * 
+from carddb import ironclad_cards as ic
+
+
 
 character_list = [
 
@@ -9,7 +11,7 @@ character_list = [
         energy=3,
         block=0,
         status=[],
-        deck=[]
+        deck=[ic[0],ic[0],ic[0],ic[0],ic[0],ic[1],ic[1],ic[1],ic[1],ic[1],ic[2]]
     )
 
 ]

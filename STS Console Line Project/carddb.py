@@ -4,7 +4,7 @@ from classlist import *
 
 ironclad_cards = [
     Card(
-        deck="Ironclad",
+        id=0,
         name="Strike",
         cost=1,
         card_type="Attack",
@@ -12,11 +12,19 @@ ironclad_cards = [
         effect=1, # Placeholder
     ),
     Card(
-        deck="Ironclad",
+        id=1,
         name="Defend",
         cost=1,
         card_type="Skill",
         description="Block 5 damage.",
+        effect=1, # Placeholder
+    ),
+    Card(
+        id=2,
+        name="Bash",
+        cost=2,
+        card_type="Attack",
+        description="Deal 8 damage. Apply 2 Vulnerable",
         effect=1, # Placeholder
     ),
 ]

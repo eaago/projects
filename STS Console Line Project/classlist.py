@@ -1,6 +1,6 @@
 class Card:
-    def __init__(self, deck, name, cost, card_type, description, effect):
-        self.deck = deck
+    def __init__(self, id, name, cost, card_type, description, effect):
+        self.id = id
         self.name = name
         self.cost = cost
         self.card_type = card_type
@@ -15,3 +15,18 @@ class Character:
         self.block = block
         self.status = status
         self.deck = deck
+
+    def deal_damage():
+        print()
+
+    def receive_block():
+        print()
+
+    def receive_damage():
+        print()
+
+    def receive_status():
+        print()
+
+
+
