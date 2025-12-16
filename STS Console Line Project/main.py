@@ -1,4 +1,3 @@
-import keyboard
 from carddb import *
 from characterdb import *
 from functionlist import *
@@ -34,15 +33,11 @@ print("\n\nYou are now playing as the", player.name, "\n\nYour starting deck con
 for card in player.draw:
     print(f"{card.name} - {card.card_type} - Costs {card.cost} energy - {card.description}")
 
-print("\n\nPress any key to continue...")
-keyboard.read_key()
+input("\nPress Enter to continue... ")
 clear_screen()
 
 # ENCOUNTER 1: SLIME
 print("\nAcid Slime Encounter")
 enemy_encounter(player, encounter_list[0])
 
-print("\n\nDraw PILE")
-for card in player.draw:
-    print(f"{card.name} - {card.card_type} - Costs {card.cost} energy - {card.description}")
 

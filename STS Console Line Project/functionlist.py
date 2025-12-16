@@ -1,6 +1,7 @@
 import os
 import encounterdb
 import random
+import keyboard
 
 def enemy_encounter(player, encounter):
 
@@ -12,29 +13,40 @@ def enemy_encounter(player, encounter):
         player.energy = player.max_energy
         choice = ""
 
-        draw_cards(player)
+        draw_cards(player, player.draw_size)
 
         while(choice != "end"):
             clear_screen()
             print(message)
             print(f"\nYour current energy:\n{player.energy}")
-            print("\nYour Draw Pile:\n")
-            for i, card in enumerate(player.draw):
-                print(i, ". ", card.name)
 
-            print("\nYour Current Hand:\n")
+            print("\nYour Hand:\n")
             for i, card in enumerate(player.hand):
-                print(i, ". ", card.name)
-
-            print("\nYour Discard Pile:\n")
-            for i, card in enumerate(player.discard):
-                print(i, ". ", card.name)
+                print(f"[{i}]. {card.cost} energy - {card.name} - {card.description}")
             
             while True:
                 try:
-                    choice = input("\n> What card would you like to play: ")
+                    choice = input("\nType the card number to play card, \"draw\" to view draw pile, or \"discard\" to view discard pile.\n> What card would you like to play: ")
                     if choice == "end":
                         message = "\nEnded your turn."
+                        break
+                    elif choice == "draw":
+                        print("\nYour Draw Pile:\n")
+                        if len(player.draw) == 0:    
+                            print("Your draw pile is empty.")  
+                        else:                
+                            for i, card in enumerate(player.draw):
+                                print(f"[{i}]. {card.cost} energy - {card.name} - {card.description}")
+                        input("\nPress Enter to return...")
+                        break
+                    elif choice == "discard":
+                        print("\nYour Discard Pile:\n")
+                        if len(player.discard) == 0:
+                            print("Your discard pile is empty.")
+                        else:
+                            for i, card in enumerate(player.discard):
+                                print(f"[{i}]. {card.cost} energy - {card.name} - {card.description}")
+                        input("\nPress Enter to return... ")
                         break
                     elif int(choice) < 0 or int(choice) >= len(player.hand):
                         print("Invalid card number. Try again.")
@@ -50,6 +62,8 @@ def enemy_encounter(player, encounter):
                     unplayed = player.hand.pop(0)
                     player.discard.append(unplayed)
                 break
+            elif choice == "draw" or choice == "discard":
+                continue
             elif player.energy >= player.hand[int(choice)].cost:
                 message = f"\nYou played {player.hand[int(choice)].name}"
                 player.energy -= player.hand[int(choice)].cost
@@ -65,20 +79,18 @@ def shuffle_deck(deck):
     random.shuffle(deck)
     return deck
 
-def draw_cards(player):
-    if len(player.draw) < player.draw_size:
-        print("im here")
+def draw_cards(player, amount):
+    if len(player.draw) < amount:
         shuffle_deck(player.discard)
         while player.discard:
             card = player.discard.pop(0)
             player.draw.append(card)
 
-    for i in range(player.draw_size):
+    for i in range(amount):
         card = player.draw.pop(0)
         player.hand.append(card)
         print(f"drew {card.name}")
-        print(f"draw size is {player.draw_size}")
-    
+
 
 def clear_screen():
     if os.name == 'nt':
