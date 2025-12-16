@@ -6,6 +6,7 @@ enemy_list = [
     Enemy(
         id = 0,
         name = "Acid Slime (S)",
+        max_health = 25,
         health = 25,
         block = 0,
         status = [],

@@ -8,22 +8,48 @@ def enemy_encounter(player, encounter):
     shuffle_deck(player.draw)
     message = ""
 
+    # Player Turn Start
     while True:
-        # Player Turn
         player.energy = player.max_energy
         choice = ""
 
         draw_cards(player, player.draw_size)
 
+        # Player Turn Card Selection
         while(choice != "end"):
             clear_screen()
             print(message)
-            print(f"\nYour current energy:\n{player.energy}")
 
+            print("\n============================\n")
+            # Player Information Panel
+            print(f"The {player.name}:")
+            print(f"\nHP:\t\t{player.health} / {player.max_health}")
+            print(f"Block:\t\t{player.block}")
+            print(f"Energy:\t\t{player.energy} / {player.max_energy}")
+            print(f"\nStatus Effects:")
+            if len(player.status) == 0:
+                print("No status effects")
+            else:
+                for stat_effect in player.status:
+                    print(stat_effect)
+
+            print("\n============================\n\nThe Enemy:")
+            for i, e in enumerate(encounter.enemy):
+                print(e.name)
+                print(f"\nHP:\t\t{e.health} / {e.max_health}")
+                print(f"Block:\t\t{e.block}")
+                print(f"\nStatus Effects:")
+                if len(e.status) == 0:
+                    print("No status effects")
+                else:
+                    for stat_effect in e.status:
+                        print(stat_effect)
+
+            print("\n============================")
             print("\nYour Hand:\n")
             for i, card in enumerate(player.hand):
                 print(f"[{i}]. {card.cost} energy - {card.name} - {card.description}")
-            
+        
             while True:
                 try:
                     choice = input("\nType the card number to play card, \"draw\" to view draw pile, or \"discard\" to view discard pile.\n> What card would you like to play: ")

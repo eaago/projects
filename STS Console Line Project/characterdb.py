@@ -7,6 +7,7 @@ character_list = [
 
     Character(
         name = "Ironclad",
+        max_health = 70,
         health = 70,
         max_energy = 3,
         energy = 3,

@@ -8,8 +8,9 @@ class Card:
         self.effect = effect
 
 class Character:
-    def __init__(self, name, health, max_energy, energy, block, status, draw, hand, discard, exhaust, draw_size):
+    def __init__(self, name, max_health, health, max_energy, energy, block, status, draw, hand, discard, exhaust, draw_size):
         self.name = name
+        self.max_health = max_health
         self.health = health
         self.max_energy = max_energy
         self.energy = energy
@@ -41,9 +42,10 @@ class EnemyEncounter:
         self.enemy = enemy # List of enemies
 
 class Enemy:
-    def __init__(self, id, name, health, block, status, moveset):
+    def __init__(self, id, max_health, name, health, block, status, moveset):
         self.id = id
         self.name = name
+        self.max_health = max_health
         self.health = health
         self.block = block
         self.status = status
