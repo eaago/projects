@@ -91,16 +91,11 @@ def enemy_encounter(player, encounter):
             elif choice == "draw" or choice == "discard":
                 continue
             elif player.energy >= player.hand[int(choice)].cost:
-                message = f"\nYou played {player.hand[int(choice)].name}"
-                player.energy -= player.hand[int(choice)].cost
-                played = player.hand.pop(int(choice))
-                player.discard.append(played)
+                message = play_card(player, choice)
             else:
                 message = "\nNot enough energy."
 
         
-
-
 def shuffle_deck(deck):
     random.shuffle(deck)
     return deck
@@ -116,6 +111,14 @@ def draw_cards(player, amount):
         card = player.draw.pop(0)
         player.hand.append(card)
         print(f"drew {card.name}")
+
+def play_card(player, choice):
+    message = f"\nYou played {player.hand[int(choice)].name}"
+    player.energy -= player.hand[int(choice)].cost
+    played = player.hand.pop(int(choice))
+    player.discard.append(played)
+
+    return message
 
 
 def clear_screen():
