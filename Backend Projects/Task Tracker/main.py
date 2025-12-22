@@ -12,9 +12,48 @@ def clear_screen():
         print("======================================================")
         print("\nWelcome to your Personal Task Tracker!\nType 'help' for instructions.\n")
 
+def list_task(status):
+    to_list = ""
+    if status == "done":
+        for task in task_list:
+            if task["status"] == "done":
+                to_print = f"[{task["id"]}]. {task["description"]}\n\tStatus: {task["status"]}\n\tCreated At: {task["createdAt"]}\n\tUpdated At: {task["updatedAt"]}\n"
+                to_list = to_list + to_print
+        if to_list == "":
+            message = "No tasks marked as done.\n"
+        else:
+            message = to_list
+        return message
+    elif status == "todo":
+        for task in task_list:
+            if task["status"] == "todo":
+                to_print = f"[{task["id"]}]. {task["description"]}\n\tStatus: {task["status"]}\n\tCreated At: {task["createdAt"]}\n\tUpdated At: {task["updatedAt"]}\n"
+                to_list = to_list + to_print
+        if to_list == "":
+            message = "No tasks marked as todo.\n"
+        else:
+            message = to_list
+        return message
+    elif status == "in-progress":
+        for task in task_list:
+            if task["status"] == "in-progress":
+                to_print = f"[{task["id"]}]. {task["description"]}\n\tStatus: {task["status"]}\n\tCreated At: {task["createdAt"]}\n\tUpdated At: {task["updatedAt"]}\n"
+                to_list = to_list + to_print
+        if to_list == "":
+            message = "No tasks marked as in-progress.\n"
+        else:
+            message = to_list
+        return message
+    elif status == "all":
+        to_list = ""
+        for task in task_list:
+            to_print = f"[{task["id"]}]. {task["description"]}\n\tStatus: {task["status"]}\n\tCreated At: {task["createdAt"]}\n\tUpdated At: {task["updatedAt"]}\n"
+            to_list = to_list + to_print
+        message = to_list
+        return message
+    
 # Main
-choice = ""
-message = "What would you like to do?\n"
+message = "What would you like to do today?\n"
 
 with open("task_list.json", "a+") as f:
     f.seek(0)
@@ -27,6 +66,8 @@ with open("task_list.json", "a+") as f:
 clear_screen()
 
 while True:
+    choice = ""
+
     print(message)
     choice = input("> task_cli ")
 
@@ -47,7 +88,6 @@ while True:
         time = datetime.datetime.now()
         task_name = ""
         for i in range(len(token) - 1):
-            print(i)
             if i != (len(token) - 2):
                 task_name = task_name + token[i + 1] + " "
             else:
@@ -60,13 +100,32 @@ while True:
             "updatedAt": time.strftime("%Y-%m-%d %H:%M:%S")
         }
         task_list.append(new_task)
-        print(new_task)
+        message = f"Task \"{new_task["description"]}\" has been added.\n"
+        clear_screen()
+        
     elif token[0] == "update" and len(token) == 3:
         pass
     elif token[0] == "delete" and len(token) == 2:
         pass
     elif token[0] == "list":
-        pass
+        if len(token) == 1:
+            message = list_task("all")
+            clear_screen()
+        elif len(token) == 2:
+            if token[1] == "done":
+                message = list_task("done")
+                clear_screen()
+            elif token[1] == "todo":
+                message = list_task("todo")
+                clear_screen()
+            elif token[1] == "in-progress":
+                message = list_task("in-progress")
+                clear_screen()
+            else:
+                message = "Invalid parameters for 'list' command. Type 'help' for proper usage.\n"
+                clear_screen()
+        elif len(token) > 2:
+            message = "Invalid parameters for 'list' command. Type 'help' for proper usage.\n"
     elif token[0] == "mark-in-progress":
         pass
     elif token[0] == "mark-done":
