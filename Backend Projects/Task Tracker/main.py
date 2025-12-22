@@ -73,10 +73,11 @@ while True:
 
     token = choice.split(" ")
 
+    # HELP
     if token[0] == "help" and len(token) == 1:
         message = """List of commands:
               \n`add`: Add a task to the tracker.\n\tUsage: add <task_name>
-              \n`update`: Update the task name of an existing task.\n\tUsage: update <task_id> <new_name>
+              \n`update`: Update the task description of an existing task.\n\tUsage: update <task_id> <new_description>
               \n`delete`: Delete an existing task.\n\tUsage: delete <task_id>
               \n`list`: List tasks. Can add extra parameter to sort based on progress.\n\tUsage: list <none|done|todo|in-progress>
               \n`mark-in-progress: Set task progress to in-progress.\n\tUsage: mark-in-progress <task_id>
@@ -84,6 +85,8 @@ while True:
               \n`help`: Prints this instruction list.\n\tUsage: help
               \n`close`: Closes and saves the tracker.\n\tUsage: close\n"""
         clear_screen()
+
+    # ADD
     elif token[0] == "add":
         time = datetime.datetime.now()
         task_name = ""
@@ -102,11 +105,47 @@ while True:
         task_list.append(new_task)
         message = f"Task \"{new_task["description"]}\" has been added.\n"
         clear_screen()
+
+    # UPDATE
+    elif token[0] == "update":
+        if len(token) < 3:
+            message = "Invalid parameters for 'update' command. Type 'help' for proper usage. wrong len\n"
+            clear_screen()
+            continue
+        try:
+            update_index = int(token[1])
+        except ValueError:
+            message = "Invalid parameters for 'update' command. Type 'help' for proper usage. wrong datatype\n"
+            clear_screen()
+            continue
+
+        found = False
+        for task in task_list:
+            if update_index == task["id"]:
+                found = True
+                time = datetime.datetime.now()
+                new_desc = ""
+                for i in range(len(token) - 2):
+                    if i != (len(token) - 3):
+                        new_desc = new_desc + token[i + 2] + " "
+                    else:
+                        new_desc = new_desc + token[i + 2]
+                old_desc = task["description"]
+                task["description"] = new_desc
+                task["updatedAt"] = time.strftime("%Y-%m-%d %H:%M:%S")
+                message = f"\"{old_desc}\" has been updated to \"{new_desc}\"\n"
+                clear_screen()
+                break
         
-    elif token[0] == "update" and len(token) == 3:
-        pass
+        if not found:
+            message = f"The task id {update_index} does not exist. Type 'list' to view indices of the tasks.\n"
+            clear_screen()
+
+    # DELETE
     elif token[0] == "delete" and len(token) == 2:
         pass
+
+    # LIST
     elif token[0] == "list":
         if len(token) == 1:
             message = list_task("all")
