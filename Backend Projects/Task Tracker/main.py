@@ -45,13 +45,26 @@ def list_task(status):
             message = to_list
         return message
     elif status == "all":
-        to_list = ""
         for task in task_list:
             to_print = f"[{task["id"]}]. {task["description"]}\n\tStatus: {task["status"]}\n\tCreated At: {task["createdAt"]}\n\tUpdated At: {task["updatedAt"]}\n"
             to_list = to_list + to_print
         message = to_list
+        if to_list == "":
+            message = "No tasks yet. Type \"help\" to get started!\n"
+        else:
+            message = to_list
         return message
     
+def delete_reorder(task_list):
+    if len(task_list) != 0:
+        for i, task in enumerate(task_list):
+            task["id"] = i + 1
+        return task_list
+    else:
+        return task_list
+
+
+
 # Main
 message = "What would you like to do today?\n"
 
@@ -109,13 +122,13 @@ while True:
     # UPDATE
     elif token[0] == "update":
         if len(token) < 3:
-            message = "Invalid parameters for 'update' command. Type 'help' for proper usage. wrong len\n"
+            message = "Invalid parameters for 'update' command. Type 'help' for proper usage.\n"
             clear_screen()
             continue
         try:
             update_index = int(token[1])
         except ValueError:
-            message = "Invalid parameters for 'update' command. Type 'help' for proper usage. wrong datatype\n"
+            message = "Invalid parameters for 'update' command. Type 'help' for proper usage.\n"
             clear_screen()
             continue
 
@@ -142,8 +155,29 @@ while True:
             clear_screen()
 
     # DELETE
-    elif token[0] == "delete" and len(token) == 2:
-        pass
+    elif token[0] == "delete":
+        if len(token) == 2:
+            try:
+                delete_index = int(token[1])
+            except ValueError:
+                message = "Invalid parameters for 'delete' command. Type 'help' for proper usage.\n"
+                clear_screen()
+                continue
+            found = False
+            for task in task_list:
+                if delete_index == task["id"]:
+                    found = True
+                    task_list.pop(delete_index - 1)
+                    task_list = delete_reorder(task_list)
+                    message = f"Task id {delete_index} has been deleted.\n"
+                    clear_screen()
+                    break
+            if not found:
+                message = f"The task id {delete_index} does not exist. Type 'list' to view indices of the tasks.\n"
+                clear_screen()
+        else:
+            message = "Invalid parameters for 'delete' command. Type 'help' for proper usage.\n"
+            clear_screen()
 
     # LIST
     elif token[0] == "list":
