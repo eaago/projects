@@ -199,10 +199,56 @@ while True:
                 clear_screen()
         elif len(token) > 2:
             message = "Invalid parameters for 'list' command. Type 'help' for proper usage.\n"
+
+    # MARK IN PROGRESS
     elif token[0] == "mark-in-progress":
-        pass
+        if len(token) == 2:
+            try:
+                update_index = int(token[1])
+            except ValueError:
+                message = "Invalid parameters for 'mark-in-progress' command. Type 'help' for proper usage. wrong val\n" #!!!!!!!!!
+                clear_screen()
+                continue
+            found = False
+            for task in task_list:
+                if update_index == task["id"]:
+                    found = True
+                    task["status"] = "in-progress"
+                    message = f"Status of task \"{task["description"]}\" has been changed to \"{task["status"]}\".\n"
+                    clear_screen()
+                    break
+            if not found:
+                message = f"The task id {update_index} does not exist. Type 'list' to view indices of the tasks.\n"
+                clear_screen()
+        else:
+            message = "Invalid parameters for 'mark-in-progress' command. Type 'help' for proper usage.\n"
+            clear_screen()
+
+    # MARK DONE
     elif token[0] == "mark-done":
-        pass
+        if len(token) == 2:
+            try:
+                update_index = int(token[1])
+            except ValueError:
+                message = "Invalid parameters for 'mark-done' command. Type 'help' for proper usage. wrong val\n" #!!!!!!!!!
+                clear_screen()
+                continue
+            found = False
+            for task in task_list:
+                if update_index == task["id"]:
+                    found = True
+                    task["status"] = "done"
+                    message = f"Status of task \"{task["description"]}\" has been changed to \"{task["status"]}\".\n"
+                    clear_screen()
+                    break
+            if not found:
+                message = f"The task id {update_index} does not exist. Type 'list' to view indices of the tasks.\n"
+                clear_screen()
+        else:
+            message = "Invalid parameters for 'mark-done' command. Type 'help' for proper usage.\n"
+            clear_screen()
+
+    # CLOSE
     elif token[0] == "close":
         print("\nTask Tracker closed. See you soon!")
         with open("task_list.json", "w") as f:
